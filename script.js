@@ -1,6 +1,5 @@
 const VALUE_OF_KEYS = {
 
-    /* -------- first row (highest) -------- */
 
     Backquote: {
         eng: '`',
@@ -94,7 +93,7 @@ const VALUE_OF_KEYS = {
         rusH: 'Backspace',
     },
 
-    /* -------- second row (tab qwerty) -------- */
+
 
     /*     Tab: {
           eng: '    ',
@@ -181,7 +180,7 @@ const VALUE_OF_KEYS = {
         rusH: '/',
     },
 
-    /* -------- third row (Caps asdfgh) -------- */
+
     /*   CapsLock: {
         eng: '',
         engH: '',
@@ -266,7 +265,7 @@ const VALUE_OF_KEYS = {
         rus: '',
         rusH: '',
       } */
-    /* -------- fourth row (l-shift zxcvbn) -------- */
+
     ShiftLeft: {
         eng: 'ShiftLeft',
         engH: 'ShiftLeft',
@@ -285,7 +284,7 @@ const VALUE_OF_KEYS = {
         rus: 'ч',
         rusH: 'Ч',
     },
-    keyC: {
+    KeyC: {
         eng: 'c',
         engH: 'C',
         rus: 'с',
@@ -340,14 +339,8 @@ const VALUE_OF_KEYS = {
         rusH: 'ShiftRight',
     },
 
-    /* -------- fifth row (bottom row) -------- */
+
     /*   ControlLeft: {
-        eng: '',
-        engH: '',
-        rus: '',
-        rusH: '',
-      },
-      MetaLeft: {
         eng: '',
         engH: '',
         rus: '',
@@ -577,6 +570,7 @@ document.querySelector(".keyboard").addEventListener('click', (event) => {
             }
             virtualKeyboard(lang, shiftEnable);
         } else {
+
             keyDo(event.target.id, lang, shiftEnable);
         }
 
@@ -594,6 +588,7 @@ document.addEventListener('keydown', function(event) {
         document.querySelectorAll(".key").forEach((element) => {
             if (element.id == event.code) {
                 element.classList.add('presed');
+
             }
 
 

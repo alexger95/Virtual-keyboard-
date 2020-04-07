@@ -472,12 +472,13 @@ textarea {
 
 .key:hover {
     background-color: #000099;
-    transition: all 0.2s;
+    transition: all 1s;
 }
 
 .presed {
     background-color: #000099;
-    transition: all 0.2s;
+    border-radius: 50%;
+    transition: all 1s;
 }
 
 .Backspace {
