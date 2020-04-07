@@ -423,35 +423,64 @@ template {
 
 html {
     height: 100%;
+    font-size: 10px;
 }
 
 body {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+}
+
+.keyboard-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.language {
+    position: absolute;
+    right: 0;
+    font-size: 3rem;
 }
 
 .keyboard {
-    width: 850px;
-    height: 300px;
+    padding: 5px;
+    font-size: 2rem;
+    width: 85vw;
+    height: 150px;
     display: flex;
     flex-wrap: wrap;
+    background-color: #151515;
+    border-radius: 10px;
+}
+
+textarea {
+    width: 70%;
+    height: 200px;
+    font-size: 30px;
 }
 
 .key {
-    width: 9%;
-    height: 9%;
-    margin: 5px;
-    background-color: black;
-    color: wheat;
+    height: 2.5vw;
+    margin: 2px;
+    background-color: #3a3a3a;
+    color: white;
     text-align: center;
+    border-radius: 4px;
+    flex: 1 0 5.9%;
 }
 
 .key:hover {
     background-color: #000099;
-    transition: all 0.2s;
+    transition: all 1s;
 }
 
 .presed {
     background-color: #000099;
-    transition: all 0.2s;
+    border-radius: 50%;
+    transition: all 1s;
+}
+
+.Backspace {
+    flex: 1 0 13%;
 }
