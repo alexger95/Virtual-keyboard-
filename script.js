@@ -268,10 +268,10 @@ const VALUE_OF_KEYS = {
       } */
     /* -------- fourth row (l-shift zxcvbn) -------- */
     ShiftLeft: {
-        eng: '',
-        engH: '',
-        rus: '',
-        rusH: '',
+        eng: 'ShiftLeft',
+        engH: 'ShiftLeft',
+        rus: 'ShiftLeft',
+        rusH: 'ShiftLeft',
     },
     KeyZ: {
         eng: 'z',
@@ -334,10 +334,10 @@ const VALUE_OF_KEYS = {
         rusH: ',',
     },
     ShiftRight: {
-        eng: '',
-        engH: '',
-        rus: '',
-        rusH: '',
+        eng: 'ShiftRight',
+        engH: 'ShiftRight',
+        rus: 'ShiftRight',
+        rusH: 'ShiftRight',
     },
 
     /* -------- fifth row (bottom row) -------- */
@@ -397,10 +397,7 @@ const VALUE_OF_KEYS = {
       }, */
 }
 
-document.querySelector('body').innerHTML = "<div class='keyboard-block'> </div><div class='language'> </div>";
-document.querySelector('.language').innerHTML = "<select class='lenguage-select'><option>eng</option><option>rus</option></select>";
-document.querySelector('.keyboard-block').innerHTML = "<textarea id='text' cllass='text'></textarea><div class='keyboard'></div>";
-
+document.querySelector('body').innerHTML = "<div class='keyboard-block'><textarea id='text' cllass='text'></textarea><div class='keyboard'></div></div><div class='language'><select class='lenguage-select'><option>eng</option><option>rus</option></div>";
 
 let lang = "eng";
 let shiftEnable = false;
@@ -413,12 +410,12 @@ document.querySelector("body > div.language > select").addEventListener('change'
 
 /*create*/
 
-function virtualKeyboard(type, shiftEnable) {
+function virtualKeyboard(type) {
 
     document.querySelector('.keyboard').innerHTML = "";
 
     for (element in VALUE_OF_KEYS) {
-        let node = document.createElement("button");
+        let node = document.createElement("div");
         if (shiftEnable == false) {
             node.innerHTML = VALUE_OF_KEYS[element][type];
         } else {
@@ -442,7 +439,7 @@ function check(id) {
 
 
 /*key function */
-function keyDo(id, lang, shiftEnable) {
+function keyDo(id, lang) {
 
     let text = document.getElementById("text").value.split("");
     let start = document.getElementById("text").selectionStart;
@@ -456,14 +453,15 @@ function keyDo(id, lang, shiftEnable) {
     } else {
         char = VALUE_OF_KEYS[id][lang];
     }
+    if (id === "Backspace" || id === "ShiftLeft" || id === "ShiftRight") {
+        if (id === "Backspace") {
+            backspace(text, start, end, str);
 
-    if (id == "Backspace") {
-        backspace(text, start, end, str);
-
-    }
-    if (id === "ShiftLeft" || id === "ShiftRight") {
-        shiftEnable = true;
-        virtualKeyboard(type, shiftEnable);
+        }
+        if (id === "ShiftLeft" || id === "ShiftRight") {
+            shiftEnable = true;
+            virtualKeyboard(lang);
+        }
     } else {
         rebuildChar(str, start, end, char);
         //document.getElementById("text").value += selectKey(id, lang);
@@ -482,12 +480,12 @@ function selectKey(id, lang) {
 
 
 /**backspace */
-function backspace(text, start, end) {;
+function backspace(text, start, end, str) {;
 
 
     //if(document.getElementById("text").selectionStart == 0 & document.getElementById("text").value.length != 0)
 
-    rebuild(str, start, end);
+    rebuildBackspace(str, start, end);
     // document.getElementById("text").value = "";
     // document.getElementById("text").value += rebuild(str, start, end).first;
     // document.getElementById("text").value += rebuild(str, start, end).last;
@@ -514,7 +512,6 @@ function rebuildBackspace(str, start, end) {
             document.getElementById("text").selectionEnd = start;
             //return { first: first, last: last };
         } else {
-
             first = str.slice(0, start - 1);
             last = str.slice(end, str.length);
             document.getElementById("text").value = "";
@@ -572,16 +569,27 @@ function rebuildChar(str, start, end, char) {
 document.querySelector(".keyboard").addEventListener('click', (event) => {
 
     if (check(event.target.id)) {
-        keyDo(event.target.id, lang, shiftEnable);
+        if (event.target.id === "ShiftLeft" || event.target.id === "ShiftRight") {
+            if (shiftEnable === false) {
+                shiftEnable = true;
+            } else {
+                shiftEnable = false;
+            }
+            virtualKeyboard(lang, shiftEnable);
+        } else {
+            keyDo(event.target.id, lang, shiftEnable);
+        }
+
+
 
     }
 });
 
-/*key input*/
+/*key input keydown*/
 document.addEventListener('keydown', function(event) {
     event.preventDefault();
     if (check(event.code)) {
-        keyDo(event.code, lang, shiftEnable);
+        keyDo(event.code, lang);
 
         document.querySelectorAll(".key").forEach((element) => {
             if (element.id == event.code) {
@@ -590,6 +598,11 @@ document.addEventListener('keydown', function(event) {
 
 
         })
+
+        // if (event.code === "ShiftLeft" || event.code === "ShiftRight") {
+        //     shiftEnable == true;
+        //      virtualKeyboard(lang, shiftEnable);
+        // }
     }
 });
 
@@ -607,13 +620,9 @@ document.addEventListener('keyup', function(event) {
         })
         if (event.code === 'ShiftLeft' || event.code === 'ShiftRight') {
             shiftEnable = false;
+            virtualKeyboard(lang);
         }
     }
 });
 
-
-
-
-
-
-virtualKeyboard(lang, shiftEnable);
+virtualKeyboard(lang);
